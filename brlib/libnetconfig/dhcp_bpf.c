@@ -66,8 +66,7 @@ dhcp_open_socket(struct interface *iface, int protocol)
 	if ((error = cdev_open(makedev(bpfmajor, 0),
 	    FREAD|FWRITE, S_IFCHR, curlwp)) != 0) {
 		if (error == EMOVEFD && l->l_dupfd >= 0) {
-			error = fd_dupopen(l->l_dupfd,
-			    &indx, FREAD|FWRITE, error);
+			error = fd_dupopen(l->l_dupfd, true, FREAD|FWRITE, &indx);
 			if (error == 0)
 				fd = indx;
 		}
